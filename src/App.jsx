@@ -6,9 +6,11 @@ import Signup from './components/Authentication/Signup';
 import Login from './components/Authentication/Login';
 import { baseUrl, headers, getToken } from './Globals';
 import DogHouseList from './components/DogHouses/DogHouseList';
+import DogHouse from './components/DogHouses/DogHouse';
 
 const App = () => {
   const [currentDog, setCurrentDog] = useState({});
+  const [dogHouses, setDogHouses] = useState([])
   const [loggedIn, setLoggedIn] = useState(false);
 
   const loginDog = dog => {
@@ -36,17 +38,28 @@ const App = () => {
         .then(resp => resp.json())
         .then(dog => loginDog(dog))
     }
-  }, [])
+
+    if(loggedIn) {
+      fetch(baseUrl + '/dog_houses', {
+        headers: {
+          ...headers,
+          ...getToken()
+        }
+      })
+        .then( resp => resp.json())
+        .then( data => setDogHouses( data ))
+    }
+  }, [loggedIn])
 
   return (
     <Router>
-      { loggedIn ? <h1>Hey were logged in</h1> : null }
-      <Navbar loggedIn={ loggedIn } logoutDog={ logoutDog } />
+      <Navbar loggedIn={ loggedIn } logoutDog={ logoutDog } currentDog={ currentDog } />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup loginDog={ loginDog } loggedIn={ loggedIn } />} />
         <Route path="/login" element={<Login loginDog={ loginDog } loggedIn={ loggedIn } />} />
-        <Route path="/doghouses" element={<DogHouseList loggedIn={ loggedIn } />} />
+        <Route path="/doghouses" element={<DogHouseList loggedIn={ loggedIn } dogHouses={ dogHouses } />} />
+        <Route path="/doghouses/:id" element={<DogHouse loggedIn={ loggedIn } dogHouses={ dogHouses } />} />
       </Routes>
     </Router>
   );

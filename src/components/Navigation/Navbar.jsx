@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-const Navbar = ({ loggedIn, logoutDog }) => {
+const Navbar = ({ loggedIn, logoutDog, currentDog }) => {
 
   const loggedOutLinks = () => {
     return (
@@ -22,6 +22,7 @@ const Navbar = ({ loggedIn, logoutDog }) => {
     return (
       <ul>
         <li><Link to="/">Homepage</Link></li>
+        <li>{ currentDog.username }</li>
         <li><Link to="/doghouses">DogHouses</Link></li>
         <li><a href="#" onClick={ handleLogout }>Logout</a></li>
       </ul>
