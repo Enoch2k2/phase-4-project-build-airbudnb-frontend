@@ -22,6 +22,7 @@ const Navbar = ({ loggedIn, logoutDog }) => {
     return (
       <ul>
         <li><Link to="/">Homepage</Link></li>
+        <li><Link to="/doghouses">DogHouses</Link></li>
         <li><a href="#" onClick={ handleLogout }>Logout</a></li>
       </ul>
     )

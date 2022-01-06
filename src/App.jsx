@@ -5,6 +5,7 @@ import Home from './components/static/Home';
 import Signup from './components/Authentication/Signup';
 import Login from './components/Authentication/Login';
 import { baseUrl, headers, getToken } from './Globals';
+import DogHouseList from './components/DogHouses/DogHouseList';
 
 const App = () => {
   const [currentDog, setCurrentDog] = useState({});
@@ -43,8 +44,9 @@ const App = () => {
       <Navbar loggedIn={ loggedIn } logoutDog={ logoutDog } />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup loginDog={ loginDog } />} />
-        <Route path="/login" element={<Login loginDog={ loginDog } />} />
+        <Route path="/signup" element={<Signup loginDog={ loginDog } loggedIn={ loggedIn } />} />
+        <Route path="/login" element={<Login loginDog={ loginDog } loggedIn={ loggedIn } />} />
+        <Route path="/doghouses" element={<DogHouseList loggedIn={ loggedIn } />} />
       </Routes>
     </Router>
   );
